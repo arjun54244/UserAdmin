@@ -5,7 +5,7 @@ This section explains how to install, configure, and access the Admin Panel.
 
 ## Preview
 
-![preview](https://github.com/arjun54244/UserAdmin/img.png)
+![preview](https://github.com/arjun54244/UserAdmin/blob/main/img.png)
 
 ## ✅ Features
 
@@ -234,4 +234,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 ?>
 ```
+
 
