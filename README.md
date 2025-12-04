@@ -212,29 +212,25 @@ contact.php
 ### Add This code on same contact page.
 ```php
 <?php
-                        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                            // Sanitize input
-                            $name = mysqli_real_escape_string($con, $_POST['name']);
-                            $email = mysqli_real_escape_string($con, $_POST['email']);
-                            $phone = mysqli_real_escape_string($con, $_POST['phone']);
-                            $services = mysqli_real_escape_string($con, $_POST['services']);
-                            $message = mysqli_real_escape_string($con, $_POST['message']);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Sanitize input
+    $name = mysqli_real_escape_string($con, $_POST['name']);
+    $email = mysqli_real_escape_string($con, $_POST['email']);
+    $phone = mysqli_real_escape_string($con, $_POST['phone']);
+    $services = mysqli_real_escape_string($con, $_POST['services']);
+    $message = mysqli_real_escape_string($con, $_POST['message']);
 
-                            // Insert data into database
-                            $sql = "INSERT INTO contacts (name, email, phone, services, message)
-                            VALUES ('$name', '$email', '$phone', '$services', '$message')";
+    // Insert data into database
+    $sql = "INSERT INTO contacts (name, email, phone, services, message)
+    VALUES ('$name', '$email', '$phone', '$services', '$message')";
 
-                            if (mysqli_query($con, $sql)) {
-                                echo "<script>alert('Your message has been sent successfully!'); window.history.back();</script>";
-                            } else {
-                                echo "<script>alert('Something went wrong. Please try again later.'); window.history.back();</script>";
-                            }
+    if (mysqli_query($con, $sql)) {
+        echo "<script>alert('Your message has been sent successfully!'); window.history.back();</script>";
+    } else {
+        echo "<script>alert('Something went wrong. Please try again later.'); window.history.back();</script>";
+    }
 
-                            mysqli_close($con);
-                        } else {
-                            // echo "<script>alert('Invalid request method.'); window.history.back();</script>";
-                            exit;
-                        }
-
-                        ?>
+        mysqli_close($con);
+    }
+?>
 ```
