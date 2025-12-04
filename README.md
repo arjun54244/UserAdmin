@@ -5,7 +5,7 @@ This section explains how to install, configure, and access the Admin Panel.
 
 ## Preview
 
-![preview](https://github.com/asantibanez/livewire-calendar/raw/master/preview.gif)
+![preview](https://github.com/arjun54244/UserAdmin/img.png)
 
 ## ✅ Features
 
@@ -234,3 +234,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 ?>
 ```
+
