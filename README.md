@@ -209,6 +209,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ```bash
 contact.php
 ```
+```html
+ <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+```
+
 ### Add This code on same contact page.
 ```php
 <?php
@@ -234,5 +238,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 ?>
 ```
+
 
 
