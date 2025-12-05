@@ -18,6 +18,14 @@ This section explains how to install, configure, and access the Admin Panel.
 - Manage Videos
 - Dashboard Overview
 
+## 📤 Uploading Files
+`
+uploads/
+uploads/service/
+uploads/gallery/
+uploads/blogs/
+`
+
 ## 🛠️ Configure Database
 
 Import your SQL database and update your connection file:
@@ -116,6 +124,19 @@ CREATE TABLE `appointments` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+```
+
+## 🗄️ SQL — Create gallery Table
+
+```sql
+CREATE TABLE gallery (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    image VARCHAR(255) NOT NULL,
+    short_description TEXT,
+    status TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
 ## 🗄️ SQL — Create contacts Table
@@ -238,6 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 ?>
 ```
+
 
 
 
