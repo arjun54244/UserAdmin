@@ -19,12 +19,12 @@ This section explains how to install, configure, and access the Admin Panel.
 - Dashboard Overview
 
 ## 📤 Uploading Files
-`
+```
 uploads/
 uploads/service/
 uploads/gallery/
 uploads/blogs/
-`
+```
 
 ## 🛠️ Configure Database
 
@@ -259,6 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 ?>
 ```
+
 
 
 
