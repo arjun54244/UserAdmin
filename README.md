@@ -15,6 +15,7 @@ This section explains how to install, configure, and access the Admin Panel.
 - Manage Appointments
 - Manage Contacts
 - Manage Testimonials
+- Manage Gallery
 - Manage Videos
 - Dashboard Overview
 
@@ -259,6 +260,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 ?>
 ```
+
 
 
 
