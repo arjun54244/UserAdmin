@@ -267,7 +267,7 @@ This project uses a simple and effective method to dynamically generate SEO meta
 The goal is to ensure every blog & service post has its own title, description, and keywords automatically loaded from the database.
 
 ###📁 File Structure
-`
+```
 /project
 │
 ├── include/
@@ -278,7 +278,7 @@ The goal is to ensure every blog & service post has its own title, description, 
 └── blogs.php
 ├── service-details.php
 └── services.php
-`
+```
 
 ###🔧 include/head.php
 This file is responsible for inserting SEO-friendly meta tags inside the <head> section of every page.
@@ -493,6 +493,7 @@ while ($row = mysqli_fetch_assoc($res)) {
 
 
     
+
 
 
 
