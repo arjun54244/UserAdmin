@@ -299,6 +299,35 @@ include('include/connect.php');
     <meta name="keywords" content="<?= htmlspecialchars($meta_keyword); ?>">
 </head>
 ```
+Here is the correct and clean PHP 7–compatible version of your include/head.php.
+Your earlier code used the null-coalescing operator incorrectly. In PHP 7, the operator ?? is valid, but not in the pattern you used.
+### ✅ Correct & Clean PHP 7 Version
+```php
+<?php
+include('include/connect.php');
+
+// Default fallback values (PHP 7 compatible)
+if (!isset($meta_title)) {
+    $meta_title = "Expert Neurology Care in Greater Noida | Dr. Chirag Gupta";
+}
+
+if (!isset($meta_desc)) {
+    $meta_desc = "Providing comprehensive neurological care and treatment in Greater Noida. Consult Dr. Chirag Gupta for expert diagnosis and personalized care.";
+}
+
+if (!isset($meta_keyword)) {
+    $meta_keyword = "Neurology, Neurologist in Greater Noida, Brain Health, Stroke Treatment, Epilepsy Care, Headache Specialist";
+}
+?>
+
+<head>
+    <title><?= htmlspecialchars($meta_title); ?></title>
+    <meta name="title" content="<?= htmlspecialchars($meta_title); ?>">
+    <meta name="description" content="<?= htmlspecialchars($meta_desc); ?>">
+    <meta name="keywords" content="<?= htmlspecialchars($meta_keyword); ?>">
+</head>
+```
+
 ## 📄 blog-details.php
 
 This file loads a single blog post based on its SEO-friendly URL and sets the meta tags for that page.
@@ -498,6 +527,7 @@ while ($row = mysqli_fetch_assoc($res)) {
 
 
     
+
 
 
 
