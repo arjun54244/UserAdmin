@@ -456,7 +456,7 @@ Each service card should link to:
 
 `service-details.php?url=your-service-slug`
 
-###✅ Example (Correct Usage)
+### ✅ Example (Correct Usage)
 ```php
 <?php
 $qry = "SELECT * FROM services WHERE status = 1";
@@ -498,6 +498,7 @@ while ($row = mysqli_fetch_assoc($res)) {
 
 
     
+
 
 
 
