@@ -283,6 +283,7 @@ The goal is to ensure every blog & service post has its own title, description, 
 ###🔧 include/head.php
 This file is responsible for inserting SEO-friendly meta tags inside the <head> section of every page.
 ```php
+<?php
 include('include/connect.php');
 
 // Default fallback values
@@ -313,31 +314,33 @@ This file loads a single blog post based on its SEO-friendly URL and sets the me
 - Passes these variables to `include/head.php` to generate the correct SEO meta tags for the blog page.
 ### 📌 Code Overview
 ```php
-include('include/connect.php');
-
-if (!isset($_GET['url']) || $_GET['url'] == '') {
-    header("location: blogs.php");
-    exit;
-}
-
-$blog_url = mysqli_real_escape_string($con, $_GET['url']);
-
-$blog_sql = mysqli_query(
-    $con,
-    "SELECT * FROM blogs WHERE blog_url='$blog_url' AND status=1 LIMIT 1"
-);
-
-if (mysqli_num_rows($blog_sql) == 0) {
-    echo "<h2>Blog Not Found</h2>";
-    exit;
-}
-
-$blog = mysqli_fetch_assoc($blog_sql);
-
-// SEO META
-$meta_title = $blog['meta_title'];
-$meta_desc = $blog['meta_desc'];
-$meta_keyword = $blog['meta_keyword'];
+<?php
+    include('include/connect.php');
+    
+    if (!isset($_GET['url']) || $_GET['url'] == '') {
+        header("location: blogs.php");
+        exit;
+    }
+    
+    $blog_url = mysqli_real_escape_string($con, $_GET['url']);
+    
+    $blog_sql = mysqli_query(
+        $con,
+        "SELECT * FROM blogs WHERE blog_url='$blog_url' AND status=1 LIMIT 1"
+    );
+    
+    if (mysqli_num_rows($blog_sql) == 0) {
+        echo "<h2>Blog Not Found</h2>";
+        exit;
+    }
+    
+    $blog = mysqli_fetch_assoc($blog_sql);
+    
+    // SEO META
+    $meta_title = $blog['meta_title'];
+    $meta_desc = $blog['meta_desc'];
+    $meta_keyword = $blog['meta_keyword'];
+?>
 ```
 ---
 ## 📄 service-details.php
@@ -356,31 +359,33 @@ This file loads a single service page based on its SEO-friendly URL and applies 
 - Passes these variables to `include/head.php` to generate the correct SEO meta tags for the service page.
 
 ```php
-include('include/connect.php');
-
-if (!isset($_GET['url']) || $_GET['url'] == '') {
-    header("location: services.php");
-    exit;
-}
-
-$service_url = mysqli_real_escape_string($con, $_GET['url']);
-
-$service_sql = mysqli_query(
-    $con,
-    "SELECT * FROM services WHERE url='$service_url' AND status=1 LIMIT 1"
-);
-
-if (mysqli_num_rows($service_sql) == 0) {
-    echo "<h2>Service Not Found</h2>";
-    exit;
-}
-
-$service = mysqli_fetch_assoc($service_sql);
-
-// SEO META
-$meta_title = $service['meta_title'];
-$meta_desc = $service['meta_desc'];
-$meta_keyword = $service['meta_keyword'];
+    <?php 
+    include('include/connect.php');
+    
+    if (!isset($_GET['url']) || $_GET['url'] == '') {
+        header("location: services.php");
+        exit;
+    }
+    
+    $service_url = mysqli_real_escape_string($con, $_GET['url']);
+    
+    $service_sql = mysqli_query(
+        $con,
+        "SELECT * FROM services WHERE url='$service_url' AND status=1 LIMIT 1"
+    );
+    
+    if (mysqli_num_rows($service_sql) == 0) {
+        echo "<h2>Service Not Found</h2>";
+        exit;
+    }
+    
+    $service = mysqli_fetch_assoc($service_sql);
+    
+    // SEO META
+    $meta_title = $service['meta_title'];
+    $meta_desc = $service['meta_desc'];
+    $meta_keyword = $service['meta_keyword'];
+?>
 ```
 ---
 
@@ -493,6 +498,7 @@ while ($row = mysqli_fetch_assoc($res)) {
 
 
     
+
 
 
 
