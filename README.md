@@ -280,7 +280,7 @@ The goal is to ensure every blog & service post has its own title, description, 
 └── services.php
 ```
 
-###🔧 include/head.php
+### 🔧 include/head.php
 This file is responsible for inserting SEO-friendly meta tags inside the <head> section of every page.
 ```php
 <?php
@@ -498,6 +498,7 @@ while ($row = mysqli_fetch_assoc($res)) {
 
 
     
+
 
 
 
