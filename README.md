@@ -17,6 +17,7 @@ This section explains how to install, configure, and access the Admin Panel.
 - Manage Testimonials
 - Manage Gallery
 - Manage Videos
+- Manage Offline Videos
 - Dashboard Overview
 
 ## 📤 Uploading Files
@@ -25,6 +26,7 @@ uploads/
 uploads/service/
 uploads/gallery/
 uploads/blogs/
+uploads/offline-videos/
 ```
 
 ## 🛠️ Configure Database
@@ -58,6 +60,7 @@ Quick navigation — click to jump 👇
 - [Contacts](#contacts)
 - [Testimonials](#testimonials)
 - [Videos](#videos)
+- [Offline Videos](#offlinevideos)
 
 Run the SQL command below to create the table
 <a id="admin"></a>
@@ -195,6 +198,25 @@ CREATE TABLE `videos` (
   `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+
+### 1️⃣ Database (important first)
+<a id="offlinevideos"></a>
+Create a new table (example):
+
+```sql
+CREATE TABLE offline_videos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255),
+    description TEXT,
+    video VARCHAR(255),
+    video_alt_tag VARCHAR(255),
+    meta_title VARCHAR(255),
+    meta_desc TEXT,
+    meta_keyword VARCHAR(255),
+    status TINYINT(1) NOT NULL DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
 ### submit_appointment.php — Appointment Form Handler
@@ -670,6 +692,7 @@ CREATE TABLE `videos` (
 ```
 
     
+
 
 
 
