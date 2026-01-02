@@ -45,7 +45,7 @@ if (!$con) {
 ?>
 ```
 
-## Admin Table Setupnstallation
+## Admin Table Setup Installation
 
 All in one 📦 Database Schema (MySQL) [Full Schema](#fullschema)
 ## 📦 Database Schema (MySQL)
@@ -61,6 +61,7 @@ Quick navigation — click to jump 👇
 - [Testimonials](#testimonials)
 - [Videos](#videos)
 - [Offline Videos](#offlinevideos)
+- [Css Reset](#cssreset)
 
 Run the SQL command below to create the table
 <a id="admin"></a>
@@ -691,7 +692,26 @@ CREATE TABLE `videos` (
 
 ```
 
-    
+<a id="cssreset"></a>
+## Reset CSS description details page
+```css
+<style>
+    .blog-content {
+        all: revert;
+        }
+                            
+    .blog-content * {
+         all: revert;
+        }
+                            
+</style>
+<div class="blog-content">
+    <div>
+        <?= $row['description'] ?>
+    </div>
+</div>
+```
+
 
 
 
