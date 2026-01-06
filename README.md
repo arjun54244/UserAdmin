@@ -18,6 +18,7 @@ This section explains how to install, configure, and access the Admin Panel.
 - Manage Gallery
 - Manage Videos
 - Manage Offline Videos
+- YouTube API
 - Dashboard Overview
 
 ## 📤 Uploading Files
@@ -62,6 +63,7 @@ Quick navigation — click to jump 👇
 - [Videos](#videos)
 - [Offline Videos](#offlinevideos)
 - [Css Reset](#cssreset)
+- [YouTube API](#youtubeapi)
 
 Run the SQL command below to create the table
 <a id="admin"></a>
@@ -710,6 +712,54 @@ CREATE TABLE `videos` (
         <?= $row['description'] ?>
     </div>
 </div>
+```
+
+<a id="youtubeapi"></a>
+# YouTube Channel Videos Fetcher (PHP)
+
+```php
+<?php
+$API_KEY = '';
+$channelID = '';
+$maxResults = 6;
+
+$apiData = file_get_contents("https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId={$channelID}&maxResults={$maxResults}&key={$API_KEY}");
+$videoList = json_decode($apiData);
+?>
+ <?php 
+       if (!empty($videoList->items)) {
+        foreach ($videoList->items as $item) {
+          if (isset($item->id->videoId)) {
+            $videoId = $item->id->videoId;
+            $title = $item->snippet->title;
+            $thumbnail = $item->snippet->thumbnails->high->url;
+            $publishedAt = date("M d, Y", strtotime($item->snippet->publishedAt));
+      ?>
+        <div class="col-md-4 mb-4">
+          <div class="card shadow-sm border-0 h-100 rounded-4 overflow-hidden">
+            <div class="ratio ratio-16x9">
+              <iframe 
+                src="https://www.youtube.com/embed/<?php echo $videoId; ?>" 
+                title="<?php echo htmlspecialchars($title); ?>" 
+                frameborder="0" allowfullscreen>
+              </iframe>
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+              <h5 class="card-title text-dark fw-semibold mb-2"><?php echo $title; ?></h5>
+              <p class="mb-2 small text-muted"><?php echo $publishedAt; ?></p>
+              <a href="https://www.youtube.com/watch?v=<?php echo $videoId; ?>" target="_blank" class="btn btn-sm btn-outline-primary mt-auto">
+                Watch on YouTube <i class="fas fa-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      <?php
+          }
+        }
+      } else {
+        echo "<p>No videos found.</p>";
+      }
+      ?>
 ```
 
 
