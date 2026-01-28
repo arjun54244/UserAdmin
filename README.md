@@ -62,8 +62,12 @@ Quick navigation — click to jump 👇
 - [Testimonials](#testimonials)
 - [Videos](#videos)
 - [Offline Videos](#offlinevideos)
+
+Frontend Setup 👇
+
 - [Css Reset](#cssreset)
 - [YouTube API](#youtubeapi)
+- [Google Translater](#gtranslate)
 
 Run the SQL command below to create the table
 <a id="admin"></a>
@@ -763,6 +767,75 @@ $videoList = json_decode($apiData);
 ```
 
 
+<a id="gtranslate"></a>
+# Add Google Translate
+## 🧩 STEP 1 — Add Google Translate Script
+### 📄 File: resources/views/layouts/app.blade.php
+
+(or your main layout)
+
+👉 Add before </body>
+```js
+<div id="google_translate_element" style="display:none;"></div>
+
+<script>
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        autoDisplay: false
+    }, 'google_translate_element');
+}
+</script>
+
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+```
+## 🎨 STEP 2 — Update Language Dropdown (Connect to Google)
+### 📄 Navbar Blade
+```js
+<li class="d-none d-md-inline-block">
+    <div class="dropdown-link">
+        <a class="dropdown-toggle" href="#" data-bs-toggle="dropdown">
+            🌐 Language
+        </a>
+
+        <ul class="dropdown-menu">
+            <li>
+                <a class="dropdown-item" href="#" onclick="changeLanguage('en')">English</a>
+                <a class="dropdown-item" href="#" onclick="changeLanguage('de')">German</a>
+                <a class="dropdown-item" href="#" onclick="changeLanguage('fr')">French</a>
+                <a class="dropdown-item" href="#" onclick="changeLanguage('it')">Italian</a>
+                <a class="dropdown-item" href="#" onclick="changeLanguage('ar')">Arabic</a>
+            </li>
+        </ul>
+    </div>
+</li>
+```
+
+## ⚙️ STEP 3 — JavaScript Language Switcher
+### 📄 Same layout file (below scripts)
+```js
+<script>
+function changeLanguage(lang) {
+    const select = document.querySelector('.goog-te-combo');
+    if (!select) return;
+
+    select.value = lang;
+    select.dispatchEvent(new Event('change'));
+}
+</script>
+```
+## 🧹 STEP 4 — Hide Google Translate Banner (Optional but Recommended)
+### 📄 Add to your main CSS
+```css
+.goog-te-banner-frame.skiptranslate,
+.goog-te-gadget {
+    display: none !important;
+}
+
+body {
+    top: 0 !important;
+}
+```
 
 
 
