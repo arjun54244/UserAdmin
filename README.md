@@ -68,6 +68,7 @@ Frontend Setup 👇
 - [Css Reset](#cssreset)
 - [YouTube API](#youtubeapi)
 - [Google Translater](#gtranslate)
+- [Google Sheet Form](#gsheetform)
 
 Run the SQL command below to create the table
 <a id="admin"></a>
@@ -836,6 +837,139 @@ body {
     top: 0 !important;
 }
 ```
+
+<a id="gsheetform"></a>
+# 🏥 Appointment Booking Form (Google Sheets Integration)
+
+This project is a simple **Appointment Booking Form** built with HTML, PHP, JavaScript, and Google Apps Script.  
+Form submissions are stored directly in a **Google Sheet** using a deployed Google Apps Script Web App.
+
+---
+
+Your site will be live at:
+
+```
+https://github.com/arjun54244/UserAdmin/googleSheet.html
+```
+
+## 📌 Features
+
+- Collects patient details:
+- Submits data to Google Sheets
+- Button loading state during submission
+- Success & error handling
+- No page reload on submit
+
+---
+
+## 🛠️ Technologies Used
+- JavaScript (Fetch API)
+- Google Apps Script
+- Google Sheets
+
+---
+
+## ⚙️ Setup Instructions
+
+### 2️⃣ Google Sheets Setup
+
+1. Create a new **Google Sheet**
+2. Rename Sheet to:  
+   ```
+   Appointments
+   ```
+3. Create columns in the first row:
+
+| Name | Email | Phone | Service | Hospital | Time | Date | Comment | Timestamp |
+
+---
+
+### 3️⃣ Google Apps Script Setup
+
+1. Open the Google Sheet
+2. Go to:
+   ```
+   Extensions → Apps Script
+   ```
+3. Replace default code with:
+
+```javascript
+function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Appointments");
+
+  var data = [
+    e.parameter.name || "",
+    e.parameter.email || "",
+    e.parameter.phone || "",
+    e.parameter.service || "",
+    e.parameter.hospital || "",
+    e.parameter.time || "",
+    e.parameter.date || "",
+    e.parameter.comment || "",
+    new Date(),
+  ];
+
+  sheet.appendRow(data);
+
+  return ContentService.createTextOutput(
+    JSON.stringify({ result: "success" })
+  ).setMimeType(ContentService.MimeType.JSON);
+}
+```
+
+4. Click **Deploy → New Deployment**
+5. Select **Web App**
+6. Set:
+   - Execute as: **Me**
+   - Who has access: **Anyone**
+7. Click **Deploy**
+8. Copy the Web App URL
+
+---
+
+### 4️⃣ Update Script URL in Your Form
+
+Replace this line in your HTML:
+
+```javascript
+const scriptURL = "YOUR_WEB_APP_URL_HERE";
+```
+
+With your deployed Google Apps Script URL.
+
+---
+
+## 📬 How It Works
+
+1. User fills the form.
+2. JavaScript prevents default submission.
+3. Form data is sent via `fetch()` to Google Apps Script.
+4. Apps Script writes data into Google Sheets.
+5. Success message is shown.
+
+---
+
+## 📄 License
+
+This project is open-source and free to use.
+
+---
+
+## 👨‍💻 Author
+
+Developed for appointment booking with Google Sheets integration.
+
+---
+
+If you want, I can also provide:
+- ✅ Advanced version with validation
+- ✅ AJAX + PHP backend version
+- ✅ Admin panel to view bookings
+- ✅ Email notification system
+- ✅ WhatsApp API integration
+
+Just tell me 👍
+
 
 
 
