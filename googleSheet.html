@@ -1,0 +1,207 @@
+<form id="appointmentForm" method="post">
+  <div class="row">
+    <div class="mb-3 col-md-6">
+      <label for="InputFullName" class="form-label">Full Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="InputFullName"
+        name="name"
+        placeholder="Full Name"
+      />
+    </div>
+    <div class="mb-3 col-md-6">
+      <label for="InputEmail" class="form-label">Your Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="InputEmail"
+        name="email"
+        placeholder="Your Email"
+      />
+    </div>
+    <div class="mb-3 col-md-6">
+      <label for="InputPhone" class="form-label">Phone Number</label>
+      <input
+        type="text"
+        class="form-control"
+        id="InputPhone"
+        name="phone"
+        placeholder="Phone Number"
+      />
+    </div>
+    <div class="form-group select-border mb-3 col-md-6">
+      <label for="InputPhone" class="form-label">Enter Treatment</label>
+      <select class="form-control basic-select" name="service" id="service">
+        <?php $sql = "SELECT * FROM `services` "; $result = mysqli_query($con,
+        $sql); while ($row = mysqli_fetch_assoc($result)) { ?>
+        <option value="<?php echo $row['title']; ?>">
+          <?php echo $row['title']; ?>
+        </option>
+        <?php } ?>
+      </select>
+    </div>
+    <div class="mb-3 col-md-6">
+      <label for="InputHospital" class="form-label">Select Hospital</label>
+      <select
+        class="form-control"
+        name="hospital"
+        id="InputHospital"
+        required
+        onchange="updateTimings()"
+      >
+        <option value="">Select Hospital</option>
+        <option value="Rama Hospital - Noida Sector 61">
+          Rama Hospital - Noida Sector 61
+        </option>
+        <option value="Dr. Kanika Roy’s Clinic Noida Sec - 30">
+          Dr. Kanika Roy’s Clinic Noida Sec - 30
+        </option>
+      </select>
+    </div>
+    <div class="mb-3 col-md-6">
+      <label for="InputTime" class="form-label">Select Appointment Time</label>
+      <select
+        class="form-control"
+        name="time"
+        id="InputTime"
+        placeholder="Preferred Time"
+        required
+      >
+        <option value="">Select Time</option>
+      </select>
+    </div>
+    <div class="mb-3 col-md-12">
+      <label for="InputPhone" class="form-label">Appointment Date</label>
+      <input
+        type="date"
+        class="form-control datetimepicker-input"
+        name="date"
+        placeholder="Date"
+        data-target="#datetimepicker-01"
+      />
+    </div>
+    <div class="mb-3 col-md-12">
+      <label for="InputPhone" class="form-label">Your Message</label>
+      <textarea
+        class="form-control"
+        name="comment"
+        id="InputComment"
+        rows="3"
+        placeholder="Comment"
+      ></textarea>
+    </div>
+    <div class="col-md-6">
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary" id="submitBtn">
+          Book Now
+        </button>
+        <!-- <a href="#" class="btn btn-primary">Send Message</a> -->
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Google form submition -->
+<script>
+  document
+    .getElementById("appointmentForm")
+    .addEventListener("submit", function (e) {
+      e.preventDefault(); // Stop normal form submit
+
+      const scriptURL =
+        "https://script.google.com/macros/s/AKfycbxEi1Rom7NEGKlLxxxxxxxx8-uv01ic923yA/exec";
+      const form = document.getElementById("appointmentForm");
+      const submitBtn = document.getElementById("submitBtn");
+      const formData = new FormData(form);
+
+      // Disable button
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = "Booking...";
+
+      fetch(scriptURL, {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = "Book Now";
+          alert("Appointment Booked Successfully!");
+          form.reset();
+        })
+        .catch((error) => {
+          alert("Error submitting form");
+          console.error("Error!", error.message);
+        });
+    });
+</script>
+
+<!-- form hospital input -->
+<script>
+  function updateTimings() {
+    const hospital = document.getElementById("InputHospital").value;
+    const timeSelect = document.getElementById("InputTime");
+
+    // Clear previous options
+    timeSelect.innerHTML = '<option value="">Select Time</option>';
+
+    if (hospital === "Rama Hospital - Noida Sector 61") {
+      // 9:00 AM to 4:00 PM (30-minute intervals)
+      addTimeRange(timeSelect, 9, 16);
+    } else if (hospital === "Dr. Kanika Roy’s Clinic Noida Sec - 30") {
+      // 9:00 AM to 8:00 PM (30-minute intervals)
+      addTimeRange(timeSelect, 9, 20);
+    }
+  }
+
+  // Generate time slots in 30-minute intervals
+  function addTimeRange(selectElement, startHour, endHour) {
+    for (let hour = startHour; hour <= endHour; hour++) {
+      addTimeOption(selectElement, formatTime(hour, 0));
+      if (hour !== endHour) addTimeOption(selectElement, formatTime(hour, 30));
+    }
+  }
+
+  // Format time for option
+  function formatTime(hour24, minute) {
+    const value = `${hour24.toString().padStart(2, "0")}:${minute === 0 ? "00" : "30"}`;
+    let hour12 = hour24 % 12 || 12;
+    const suffix = hour24 < 12 ? "AM" : "PM";
+    const label = `${hour12}:${minute === 0 ? "00" : "30"} ${suffix}`;
+    return [value, label];
+  }
+
+  function addTimeOption(selectElement, [value, label]) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.text = label;
+    selectElement.add(option);
+  }
+</script>
+
+<!-- App Script -->
+<script>
+  function doPost(e) {
+    var sheet =
+      SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Appointments");
+
+    var data = [
+      e.parameter.name || "",
+      e.parameter.email || "",
+      e.parameter.phone || "",
+      e.parameter.service || "",
+      e.parameter.hospital || "",
+      e.parameter.time || "",
+      e.parameter.date || "",
+      e.parameter.comment || "",
+      new Date(),
+    ];
+
+    sheet.appendRow(data);
+
+    return ContentService.createTextOutput(
+      JSON.stringify({ result: "success" }),
+    ).setMimeType(ContentService.MimeType.JSON);
+  }
+</script>
