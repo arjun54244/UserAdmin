@@ -78,6 +78,11 @@ Frontend Setup 👇
 - [Google Translater](#gtranslate)
 - [Google Sheet Form](#gsheetform)
 
+Run the SQL command below to create the database
+```sql
+CREATE DATABASE project_name;
+USE project_name;
+```
 Run the SQL command below to create the table
 <a id="admin"></a>
 ```sql
