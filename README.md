@@ -29,6 +29,14 @@ uploads/gallery/
 uploads/blogs/
 uploads/offline-videos/
 ```
+```powerShell
+mkdir uploads/service, uploads/gallery, uploads/blogs, uploads/offline-videos
+```
+
+### create all th fontend file
+```powerShell
+New-Item -Path "include/head.php", "include/header.php", "include/foor.php", "include/footer.php", "include/connection.php" -ItemType File
+```
 
 ## 🛠️ Configure Database
 
