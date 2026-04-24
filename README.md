@@ -1003,6 +1003,8 @@ You can download the project setup script and database schema directly from this
 ```powershell
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 ```
+### After this
+Run your script:
 ```powsershell
 .\setup-project.ps1
 ```
