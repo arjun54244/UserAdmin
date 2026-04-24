@@ -57,6 +57,7 @@ if (!$con) {
 ## Admin Table Setup Installation
 
 All in one 📦 Database Schema (MySQL) [Full Schema](#fullschema)
+Auto Full project Setup 🚀😎 [AutoSetup](#autosetup)
 ## 📦 Database Schema (MySQL)
 
 Quick navigation — click to jump 👇
@@ -984,6 +985,26 @@ If you want, I can also provide:
 Just tell me 👍
 
 
+## Auto Full Project Setup Instructions 😎🚀
+
+## Download Files
+
+You can download the project setup script and database schema directly from this repository:
+
+- [Download setup script](./setup-project.ps1)  
+- [Download database schema](./scheme.sql)
+
+### 1. Allow Script Execution (First Time Only)
+
+1. Open **PowerShell as Administrator**.
+2. Run the following command to allow script execution for your user:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+```powsershell
+.\setup-project.ps1
+```
 
 
 
