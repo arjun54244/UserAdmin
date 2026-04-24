@@ -986,6 +986,7 @@ Just tell me 👍
 
 
 ## Auto Full Project Setup Instructions 😎🚀
+<a id="autosetup"></a>
 
 ## Download Files
 
