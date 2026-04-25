@@ -39,6 +39,50 @@ foreach ($path in $uploadPaths) {
 Write-Host "✅ Upload folders created"
 
 # ================================
+# Download & Extract admin.zip
+# ================================
+
+$downloadAdmin = Read-Host "Do you want to download admin.zip? (yes/no)"
+
+if ($downloadAdmin -eq "yes") {
+
+    # GitHub direct download link
+    $zipUrl = "https://github.com/arjun54244/UserAdmin/raw/main/admin.zip"
+
+    # Save zip inside project folder
+    $zipPath = Join-Path $basePath "admin.zip"
+
+    # Extract to admin folder
+    $extractPath = Join-Path $basePath "admin"
+
+    Write-Host "📥 Downloading admin.zip..."
+
+    try {
+        Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath -UseBasicParsing
+        Write-Host "✅ admin.zip downloaded"
+    }
+    catch {
+        Write-Host "❌ Failed to download zip file"
+        exit
+    }
+
+    Write-Host "📂 Extracting files..."
+
+    try {
+        Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
+        Remove-Item $zipPath -Force
+        Write-Host "✅ admin folder created successfully"
+    }
+    catch {
+        Write-Host "❌ Failed to extract zip file"
+        exit
+    }
+}
+else {
+    Write-Host "Skipped admin panel download"
+}
+
+# ================================
 # Create Include Files
 # ================================
 $includePath = Join-Path $basePath "include"
