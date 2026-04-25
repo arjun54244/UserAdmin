@@ -1010,6 +1010,11 @@ Run your script:
 .\setup-project.ps1
 ```
 
+if you still fassing some issues then user diract command 
+```powershell
+powershell -ExecutionPolicy Bypass -File .\setup-project.ps1
+```
+
 
 
 
