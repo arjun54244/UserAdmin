@@ -991,9 +991,10 @@ Just tell me 👍
 ## Download Files
 
 You can download the project setup script and database schema directly from this repository:
+## Downloads
 
-- [Download setup script](./setup-project.ps1)  
-- [Download database schema](./scheme.sql)
+🔽 [Download setup script](https://github.com/arjun54244/UserAdmin/raw/main/setup-project.ps1)  
+🗃️ [Download database schema](https://github.com/arjun54244/UserAdmin/raw/main/schema.sql)
 
 ### 1. Allow Script Execution (First Time Only)
 
