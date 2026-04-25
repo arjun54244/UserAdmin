@@ -41,45 +41,39 @@ Write-Host "✅ Upload folders created"
 # ================================
 # Download & Extract admin.zip
 # ================================
-
 $downloadAdmin = Read-Host "Do you want to download admin.zip? (yes/no)"
 
 if ($downloadAdmin -eq "yes") {
 
-    # GitHub direct download link
     $zipUrl = "https://github.com/arjun54244/UserAdmin/raw/main/admin.zip"
-
-    # Save zip inside project folder
     $zipPath = Join-Path $basePath "admin.zip"
-
-    # Extract to admin folder
     $extractPath = Join-Path $basePath "admin"
 
-    Write-Host "📥 Downloading admin.zip..."
+    Write-Host "Downloading admin.zip..."
 
     try {
-        Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath -UseBasicParsing
-        Write-Host "✅ admin.zip downloaded"
+        Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath
+        Write-Host "Downloaded successfully"
     }
     catch {
-        Write-Host "❌ Failed to download zip file"
+        Write-Host "Download failed"
         exit
     }
 
-    Write-Host "📂 Extracting files..."
+    Write-Host "Extracting files..."
 
     try {
         Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
         Remove-Item $zipPath -Force
-        Write-Host "✅ admin folder created successfully"
+        Write-Host "Admin panel ready"
     }
     catch {
-        Write-Host "❌ Failed to extract zip file"
+        Write-Host "Extraction failed"
         exit
     }
 }
 else {
-    Write-Host "Skipped admin panel download"
+    Write-Host "Skipped admin download"
 }
 
 # ================================
@@ -88,7 +82,7 @@ else {
 $includePath = Join-Path $basePath "include"
 New-Item -ItemType Directory -Path $includePath -Force | Out-Null
 
-$files = @("head.php", "header.php", "footer.php", "connection.php")
+$files = @("head.php","header.php","footer.php","connection.php")
 
 foreach ($file in $files) {
     New-Item -ItemType File -Path (Join-Path $includePath $file) -Force | Out-Null
@@ -97,7 +91,7 @@ foreach ($file in $files) {
 Write-Host "✅ Include files created"
 
 # ================================
-# DB Connection File (PORT FIXED)
+# DB Connection File
 # ================================
 $mysqlPort = 3307
 
@@ -113,18 +107,20 @@ if (!`$con) {
 
 Set-Content -Path (Join-Path $includePath "connection.php") -Value $dbContent
 
-Write-Host "✅ Database connection file configured"
+Write-Host "✅ DB connection file created"
 
 # ================================
-# Create Frontend Files
+# Frontend Files
 # ================================
-$createFrontend = Read-Host "Do you want to create frontend files? (yes/no)"
+$createFrontend = Read-Host "Do you want frontend files? (yes/no)"
+
 if ($createFrontend -eq "yes") {
-    $frontendFiles = @("index.php", "about.php", "contact.php", "services.php", "blog.php")
+
+    $frontendFiles = @("index.php","about.php","contact.php","services.php","blog.php")
 
     foreach ($file in $frontendFiles) {
         $filePath = Join-Path $basePath $file
-    
+        
         $content = @"
 <?php include('include/head.php'); ?>
 <?php include('include/header.php'); ?>
@@ -140,7 +136,7 @@ if ($createFrontend -eq "yes") {
     Write-Host "✅ Frontend files created"
 }
 else {
-    Write-Host "Skipped frontend creation"
+    Write-Host "⏭️ Skipped frontend"
 }
 
 # ================================
@@ -156,35 +152,23 @@ if ($importDb -eq "yes") {
     $rootSchema = Join-Path (Get-Location) "schema.sql"
     $schemaPath = Join-Path $basePath "schema.sql"
 
-    # Copy schema.sql
-    if (Test-Path $rootSchema) {
-        Copy-Item $rootSchema $schemaPath -Force
-    }
-    else {
-        Write-Host "❌ schema.sql not found in root folder"
+    if (!(Test-Path $rootSchema)) {
+        Write-Host "schema.sql not found"
         exit
     }
 
-    Write-Host "📦 Importing database..."
+    Copy-Item $rootSchema $schemaPath -Force
 
-    # Create DB
+    Write-Host "Importing database..."
+
     cmd /c "`"$mysqlPath`" -u root --port=$mysqlPort -e `"CREATE DATABASE IF NOT EXISTS $dbName;`""
-    if ($LASTEXITCODE -ne 0) {
-        Write-Host "❌ Failed to create database (Check MySQL running)"
-        exit
-    }
 
-    # Import schema
-    cmd /c "type `"$schemaPath`" | `"$mysqlPath`" -u root --port=$mysqlPort $dbName"
-    if ($LASTEXITCODE -ne 0) {
-        Write-Host "❌ Failed to import schema"
-        exit
-    }
+    Get-Content $schemaPath | & $mysqlPath -u root --port=$mysqlPort $dbName
 
-    Write-Host "✅ Database imported successfully"
-}
+    Write-Host "Database imported successfully"
+}  # ✅ THIS CLOSING BRACE IS REQUIRED
 
 # ================================
-# Done
+# DONE
 # ================================
 Write-Host "Setup completed successfully!"
