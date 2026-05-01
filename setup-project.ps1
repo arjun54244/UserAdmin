@@ -82,7 +82,7 @@ else {
 $includePath = Join-Path $basePath "include"
 New-Item -ItemType Directory -Path $includePath -Force | Out-Null
 
-$files = @("head.php","header.php","footer.php","connection.php")
+$files = @("head.php","header.php","foot.php","footer.php","connection.php")
 
 foreach ($file in $files) {
     New-Item -ItemType File -Path (Join-Path $includePath $file) -Force | Out-Null
@@ -93,7 +93,7 @@ Write-Host "✅ Include files created"
 # ================================
 # DB Connection File
 # ================================
-$mysqlPort = 3307
+$mysqlPort = 3306
 
 $dbContent = @"
 <?php
